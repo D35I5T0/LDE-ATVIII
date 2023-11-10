@@ -1,0 +1,156 @@
+public void removerRepetidos(int valor) {
+        if (this.isEmpty()) {
+            System.out.println("Lista vazia!");
+        } 
+        else if (this.primeiro.getInfo() == valor) {
+            LDENode aux;
+            aux = this.primeiro.getProx();
+            if (aux.getInfo() == valor) {
+                while(aux.getInfo() == valor) {
+                    this.primeiro = aux;
+                    aux.setAnt(null);
+                    aux = aux.getProx();
+                    this.qtd--;
+                }
+            }
+            else {
+                this.primeiro = this.primeiro.getProx();
+                this.qtd--; 
+            }
+            if (this.qtd == 0) {
+                this.ultimo = null;
+            } 
+            else {
+                this.primeiro.setAnt(null);
+            }
+            System.out.println("Remoção efetuada!");
+        } 
+        else if (this.ultimo.getInfo() == valor) {
+            LDENode aux;
+            aux = this.ultimo.getAnt();
+            if (aux.getInfo() == valor) {
+                while(aux.getInfo() == valor) {
+                    aux.setProx(null);
+                    aux = aux.getAnt();
+                    this.qtd--;
+                }
+            }
+            this.ultimo = aux;
+            this.ultimo.setProx(null);
+            System.out.println("Remoção efetuada!");
+        }
+        else { 
+            LDENode aux = this.primeiro;
+            LDENode anterior, proximo;
+            while (aux != null) {
+                if (aux.getInfo() == valor) {
+                    anterior = aux.getAnt();
+                    proximo = aux.getProx();
+                    anterior.setProx(proximo);
+                    proximo.setAnt(anterior);
+                    qtd--;
+                }
+            } 
+        }
+        System.out.println("Remoção efetuada!");
+    }
+
+    public LDEInt intersecao (LDEInt listaA, LDEInt listaB) {
+        LDENode auxA = listaA.primeiro;
+        LDENode auxB = listaB.primeiro;
+        int qtd1 = listaA.qtd;
+        int qtd2 = listaB.qtd;
+        LDEInt listaC = new LDEInt();
+
+        if (qtd1 >= qtd2) {
+            while (auxB != null) {
+                if (auxA.getInfo() == auxB.getInfo()) { 
+                    listaC.inserir(auxA.getInfo());
+                    auxA = auxA.getProx();
+                    auxB = auxB.getProx();
+                }
+                else {
+                    auxA = auxA.getProx();
+                    auxB = auxB.getProx();
+                }
+            }
+            return listaC;
+        }
+        else {
+            while (auxA != null) {
+                if (auxA.getInfo() == auxB.getInfo()) { 
+                    listaC.inserir(auxA.getInfo());
+                }
+                else {
+                    auxA = auxA.getProx();
+                    auxB = auxB.getProx();
+                }
+            }
+            return listaC;
+        }
+    }
+    public LDEInt uniao (LDEInt listaA, LDEInt listaB) {
+        LDENode auxA = listaA.primeiro;
+        LDENode auxB = listaB.primeiro;
+        int qtd1 = listaA.qtd;
+        int qtd2 = listaB.qtd;
+        LDEInt listaC = new LDEInt();
+
+        if (qtd1 >= qtd2) {
+            while (auxA != null) {
+                if (auxB == null) {
+                    listaC.inserir(auxA.getInfo());
+                    auxA = auxA.getProx();
+                }
+                else if (auxA.getInfo() != auxB.getInfo()) { 
+                    listaC.inserir(auxA.getInfo());
+                    auxA = auxA.getProx();
+                    auxB = auxB.getProx();
+                }
+                else {
+                    auxA = auxA.getProx();
+                    auxB = auxB.getProx();
+                }
+            }
+            return listaC;
+        }
+        else {
+            while (auxB != null) {
+                if (auxA == null) {
+                    listaC.inserir(auxB.getInfo());
+                    auxB = auxB.getProx();
+                }
+                else if (auxA.getInfo() != auxB.getInfo()) { 
+                    listaC.inserir(auxA.getInfo());
+                    auxA = auxA.getProx();
+                    auxB = auxB.getProx();
+                }
+                else {
+                    auxA = auxA.getProx();
+                    auxB = auxB.getProx();
+                }
+            }
+            return listaC;
+        }
+    }
+
+    public LDEInt diferenca (LDEInt listaA, LDEInt listaB) {
+        LDENode auxA = listaA.primeiro;
+        LDENode auxB = listaB.primeiro;
+        LDEInt listaC = new LDEInt();
+
+        while (auxA != null) {
+            if (auxB == null) {
+                listaC.inserir(auxA.getInfo());
+                auxA = auxA.getProx();
+            }
+            else {
+                if (auxA.getInfo() != auxB.getInfo()) {
+                    listaC.inserir(auxA.getInfo());
+                    auxA = auxA.getProx();
+                    auxB = auxB.getProx();
+                }
+            }
+        }
+        return listaC;
+    }
